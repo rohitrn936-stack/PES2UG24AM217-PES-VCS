@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+//errors checked
 // ─── PROVIDED ────────────────────────────────────────────────────────────────
 
 IndexEntry* index_find(Index *index, const char *path) {
