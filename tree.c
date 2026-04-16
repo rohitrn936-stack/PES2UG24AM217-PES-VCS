@@ -12,15 +12,6 @@
 #define MODE_EXEC      0100755
 #define MODE_DIR       0040000
 
-uint32_t get_file_mode(const char *path) {
-    struct stat st;
-    if (lstat(path, &st) != 0) return 0;
-
-    if (S_ISDIR(st.st_mode))  return MODE_DIR;
-    if (st.st_mode & S_IXUSR) return MODE_EXEC;
-    return MODE_FILE;
-}
-
 int tree_parse(const void *data, size_t len, Tree *tree_out) {
     tree_out->count = 0;
     const uint8_t *ptr = (const uint8_t *)data;
@@ -107,5 +98,13 @@ int tree_from_index(ObjectID *id_out) {
         tree.count++;
     }
 
- 
+    void *data = NULL;
+    size_t len = 0;
+
+    if (tree_serialize(&tree, &data, &len) != 0) return -1;
+
+    int rc = object_write(OBJ_TREE, data, len, id_out);
+
+    free(data);
+    return rc;
 }
