@@ -6,7 +6,8 @@
 //   parent <64-char-hex-hash>        ← omitted for the first commit
 //   author <name> <unix-timestamp>
 //   committer <name> <unix-timestamp>
-//
+//no change 
+
 //   <commit message>
 //
 // Note: there is a blank line between the headers and the message.
@@ -196,6 +197,7 @@ int head_update(const ObjectID *new_commit) {
 int commit_create(const char *message, ObjectID *commit_id_out) {
     // TODO: Implement commit creation
     // (See Lab Appendix for logical steps)
+    
     (void)message; (void)commit_id_out;
     return -1;
 }
