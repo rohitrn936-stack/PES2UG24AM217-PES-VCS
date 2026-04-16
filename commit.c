@@ -197,7 +197,23 @@ int head_update(const ObjectID *new_commit) {
 int commit_create(const char *message, ObjectID *commit_id_out) {
     // TODO: Implement commit creation
     // (See Lab Appendix for logical steps)
-    
+    Index idx;
+index_load(&idx);
+
+ObjectID tree_id;
+tree_from_index(&tree_id);
+
+char tree_hex[HASH_HEX_SIZE + 1];
+hash_to_hex(&tree_id, tree_hex);
+
+char buffer[1024];
+snprintf(buffer, sizeof(buffer),
+         "tree %s\n\n%s\n",
+         tree_hex,
+         message);
+
+ObjectID commit_id;
+object_write(OBJ_COMMIT, buffer, strlen(buffer), &commit_id);
     (void)message; (void)commit_id_out;
     return -1;
 }
